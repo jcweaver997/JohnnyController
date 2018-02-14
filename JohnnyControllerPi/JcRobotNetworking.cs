@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -35,13 +34,6 @@ namespace JcNetworking
         }
         private byte ReceivedMessage = 255;
 
-        /// <summary>
-        /// The list of commands commands able to be sent and received.
-        /// This list needs to match on both controller and robot.
-        /// The first byte is the network code 0-254
-        /// The second byte can be anything; usualy for a local id
-        /// </summary>
-        public Dictionary<byte, byte> Commands;
         private Socket socket;
         private IPEndPoint other;
         public delegate void OnCommandRecieve(Command c);
@@ -62,8 +54,8 @@ namespace JcNetworking
         {
             connectionType = type;
             this.onCommandRecieve = onCommandRecieve;
-            Commands = new Dictionary<byte, byte>();
-            Commands.Add(0,ReceivedMessage);
+            //Commands = new Dictionary<byte, byte>();
+            //Commands.Add(0,ReceivedMessage);
         }
 
         public void Connect(int port, string hostname = "")
@@ -91,7 +83,7 @@ namespace JcNetworking
             {
                 entry = Dns.GetHostEntry(robotHostName);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Can't find the robot in dns");
                 Console.WriteLine("Trying again in 5 seconds...");
@@ -233,7 +225,7 @@ namespace JcNetworking
         public void SendCommand(Command c, bool waitForResponse = false)
         {
             byte[] buffer = new byte[5];
-            buffer[0] = (byte)c.commandID;
+            buffer[0] = c.commandID;
             Array.Copy(c.param, 0, buffer, 1, 4);
             commandRecieved = false;
 
