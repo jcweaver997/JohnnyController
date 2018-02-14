@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JcNetworking;
 
 namespace JohnnyController
 {
@@ -14,7 +15,7 @@ namespace JohnnyController
         private string _joystickName;
         private string _portname;
         private SerialPort _port;
-        private Joystick _js;
+        private JcRobotNetworking _jcn;
 
         private float[] _percents;
         private int _time;
@@ -65,10 +66,7 @@ namespace JohnnyController
                 _portname = "/dev/"+_portname;
             }
             
-            Console.WriteLine("Choose a gampad:");
-            Joystick.PrintJoysticks();
-            _joystickName = Console.ReadLine();
-            _joystickName = "/dev/input/" + _joystickName;
+
 
 
         }
@@ -77,7 +75,25 @@ namespace JohnnyController
         {
             _port = new SerialPort(_portname,115200, Parity.None, 8, StopBits.One);
             _port.Open();
-            _js = new WeirdChineseController(_joystickName);
+            _jcn = new JcRobotNetworking(JcRobotNetworking.ConnectionType.Robot, Update);
+
+            _jcn.Commands.Add(servoWaist, servoWaist);
+            _jcn.Commands.Add(servoTorso, servoTorso);
+            _jcn.Commands.Add(servoHead, servoHead);
+            _jcn.Commands.Add(servoShoulderLeft, servoShoulderLeft);
+            _jcn.Commands.Add(servoShoulderRight, servoShoulderRight);
+            _jcn.Commands.Add(servoElbowLeft, servoElbowLeft);
+            _jcn.Commands.Add(servoElbowRight, servoElbowRight);
+            _jcn.Commands.Add(servoArmRotationLeft, servoArmRotationLeft);
+            _jcn.Commands.Add(servoArmRotationRight, servoArmRotationRight);
+            _jcn.Commands.Add(servoWristLeft, servoWristLeft);
+            _jcn.Commands.Add(servoWristRight, servoWristRight);
+            _jcn.Commands.Add(servoHandLeft, servoHandLeft);
+            _jcn.Commands.Add(servoHandRight, servoHandRight);
+            _jcn.Commands.Add(motorDriveLeft, motorDriveLeft);
+            _jcn.Commands.Add(motorDriveRight, motorDriveRight);
+
+
             _running = true;
             _time = 50;
             _timeOverlap = 2;
@@ -93,32 +109,25 @@ namespace JohnnyController
 
         }
 
+
         public void Start()
         {
-
+            _jcn.Connect(1296);
             while (_running)
             {
-                
                 TestUpdate();
                 System.Threading.Thread.Sleep(_time-_timeOverlap);
             }
         }
 
         private void TestUpdate(){
-            AddValue(servoHead,_js.GetThumbstickLeft().X*_controllerGain);
             SetPositions(_percents, _time);
         }
 
-        private void Update()
+        private void Update(JcRobotNetworking.Command c)
         {
             
             SetPositions(_percents, _time);
-        }
-
-        private void AddValue(int index, float value)
-        {
-            _percents[index] += value;
-            _percents[index] = minmax(_percents[index], 0, 1);
         }
 
         private void SetValue(int index, float value){

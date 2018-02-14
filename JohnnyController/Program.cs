@@ -22,6 +22,12 @@ namespace JohnnyController
                 new Thread(() => { ac.Start(); }).Start();
             }
 
+
+            Console.WriteLine("Choose a gampad:");
+            Joystick.PrintJoysticks();
+            _joystickName = Console.ReadLine();
+            _joystickName = "/dev/input/" + _joystickName;
+
          }
     }
 

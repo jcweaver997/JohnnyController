@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JohnnyController", "JohnnyController\JohnnyController.csproj", "{63AC9EE6-F29E-49D0-8595-3CDA853C0509}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JohnnyControllerPi", "JohnnyControllerPi\JohnnyControllerPi.csproj", "{2549197A-AD09-49D1-ADAF-2BA6D599F00D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +15,9 @@ Global
 		{63AC9EE6-F29E-49D0-8595-3CDA853C0509}.Debug|x86.Build.0 = Debug|x86
 		{63AC9EE6-F29E-49D0-8595-3CDA853C0509}.Release|x86.ActiveCfg = Release|x86
 		{63AC9EE6-F29E-49D0-8595-3CDA853C0509}.Release|x86.Build.0 = Release|x86
+		{2549197A-AD09-49D1-ADAF-2BA6D599F00D}.Debug|x86.ActiveCfg = Debug|x86
+		{2549197A-AD09-49D1-ADAF-2BA6D599F00D}.Debug|x86.Build.0 = Debug|x86
+		{2549197A-AD09-49D1-ADAF-2BA6D599F00D}.Release|x86.ActiveCfg = Release|x86
+		{2549197A-AD09-49D1-ADAF-2BA6D599F00D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
